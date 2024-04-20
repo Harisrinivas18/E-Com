@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+
+  backend:
+    image: wlepich/ebiznes-backend:latest
+    environment:
+      - PLAY_SECRET_KEY
+      - GOOGLE_ID
+      - GOOGLE_KEY
+      - FACEBOOK_ID
+      - FACEBOOK_KEY
+    expose:
+      - "9000"    # scala play
+    networks:
+      - my-network
+    volumes:
+      - database:/home/nonroot/db
+
+  frontend:
+    image: wlepich/ebiznes-frontend:latest
+    ports:
+      - "80:80"   # nginx
+      - "8080:8080"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+
+volumes:
+  database:
